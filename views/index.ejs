@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<body>
+  <div class="container">
+    <h1>📝 My To-Do List</h1>
+
+    <form action="/add" method="POST" class="todo-form">
+      <input type="text" name="task" placeholder="Add a new task..." required>
+      <button type="submit">Add</button>
+    </form>
+
+    <ul class="todo-list">
+      <% if (todos.length === 0) { %>
+        <li class="empty">No tasks yet. Enjoy your day!</li>
+      <% } %>
+      <% todos.forEach(function(todo) { %>
+        <li class="<%= todo.completed ? 'done' : '' %>">
+          <form action="/toggle/<%= todo.id %>" method="POST">
+            <button type="submit" class="toggle-btn"><%= todo.completed ? '✔️' : '⬜' %></button>
+          </form>
+          <span><%= todo.text %></span>
+          <form action="/delete/<%= todo.id %>" method="POST">
+            <button type="submit" class="delete-btn">🗑️</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+
+
+
+<%- include("partials/footer.ejs") %>
